@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Giriş Yap / Kayıt Ol</title>
+<style>
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #1e1e2f;
+    color: #eee;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+  }
+  .card {
+    background: #2e2e44;
+    padding: 2rem;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  }
+  h1 { color: #f39c12; margin-bottom: 1.5rem; }
+  input {
+    width: 100%;
+    padding: 0.7rem;
+    margin: 0.5rem 0;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    background: #444466;
+    color: #fff;
+  }
+  button {
+    background: #f39c12;
+    border: none;
+    color: #fff;
+    padding: 0.8rem;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+    margin: 0.5rem 0;
+  }
+  button:hover { background: #e67e22; }
+  p { margin-top: 1rem; font-size: 0.9rem; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h1>Giriş Yap / Kayıt Ol</h1>
+  <input type="text" id="username" placeholder="Kullanıcı Adı">
+  <input type="password" id="password" placeholder="Şifre">
+  <button onclick="login()">Giriş Yap</button>
+  <button onclick="register()">Kayıt Ol</button>
+  <p id="msg"></p>
+</div>
+
+<script>
+function register() {
+  const user = document.getElementById("username").value.trim();
+  const pass = document.getElementById("password").value.trim();
+
+  if (!user || !pass) {
+    document.getElementById("msg").textContent = "Lütfen kullanıcı adı ve şifre girin!";
+    return;
+  }
+
+  if (localStorage.getItem("user_"+user)) {
+    document.getElementById("msg").textContent = "Bu kullanıcı zaten kayıtlı!";
+    return;
+  }
+
+  localStorage.setItem("user_"+user, pass);
+  document.getElementById("msg").textContent = "✅ Kayıt başarılı! Şimdi giriş yapabilirsiniz.";
+}
+
+function login() {
+  const user = document.getElementById("username").value.trim();
+  const pass = document.getElementById("password").value.trim();
+
+  const savedPass = localStorage.getItem("user_"+user);
+
+  if (savedPass === pass) {
+    localStorage.setItem("loggedInUser", user);
+    window.location.href = "index.html";
+  } else {
+    document.getElementById("msg").textContent = "❌ Hatalı kullanıcı adı veya şifre!";
+  }
+}
+</script>
+
+</body>
+</html>
