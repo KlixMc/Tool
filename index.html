@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RP/BP Paket Oluşturucu</title>
+<style>
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #1e1e2f;
+    color: #eee;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+  }
+  .logo {
+    width: 120px;
+    height: auto;
+    margin-bottom: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+  }
+  h1 { color: #f39c12; margin: 1rem 0; text-align: center; }
+  .card {
+    background: #2e2e44;
+    padding: 2rem;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  }
+  button {
+    background: #f39c12;
+    border: none;
+    color: #fff;
+    padding: 0.8rem 1.5rem;
+    font-size: 1.1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    margin: 1rem 0;
+    width: 80%;
+  }
+  button:hover { background: #e67e22; }
+</style>
+</head>
+<body>
+
+<img src="res/logo.png" alt="Logo" class="logo">
+<h1>RP/BP Paket Oluşturucu</h1>
+
+<div class="card">
+  <button onclick="window.location.href='uuid.html'">UUID Oluştur</button>
+  <button onclick="window.location.href='manifest.html'">Manifest Oluştur</button>
+</div>
+
+</body>
+</html>

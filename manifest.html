@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manifest Oluşturucu</title>
+<style>
+body { font-family: 'Segoe UI', sans-serif; background: #1e1e2f; color: #eee; display: flex; flex-direction: column; align-items: center; padding: 2rem; }
+.logo { width: 120px; height: auto; margin-bottom: 1rem; border-radius: 12px; box-shadow: 0 3px 10px rgba(0,0,0,0.3); }
+h1 { color: #f39c12; margin-bottom: 2rem; text-align:center; }
+.card { background: #2e2e44; padding: 2rem; border-radius: 12px; width: 90%; max-width: 600px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+input, input[type="url"], input[type="text"], textarea { width: 100%; padding: 0.7rem; font-size: 1rem; margin: 0.5rem 0 1rem 0; border-radius: 6px; border: none; outline: none; background: #444466; color: #fff; }
+textarea { resize: vertical; min-height: 60px; }
+button { background: #f39c12; border: none; color: #fff; padding: 0.7rem 1rem; font-size: 1rem; border-radius: 6px; cursor: pointer; margin-bottom: 1rem; width: 100%; }
+button:hover { background: #e67e22; }
+pre { background: #1c1c2b; padding: 1rem; border-radius: 8px; overflow-x: auto; max-height: 300px; }
+</style>
+</head>
+<body>
+
+<img src="res/logo.png" alt="Logo" class="logo">
+<h1>Manifest Oluşturucu</h1>
+
+<div class="card">
+  <label>UUID:</label>
+  <input type="text" id="uuid" placeholder="UUID girin veya uuid.html’den kopyalayın">
+
+  <label>Paket İsmi:</label>
+  <input type="text" id="packageName" placeholder="Örnek: Süper RP Paketi">
+
+  <label>Paket Açıklaması:</label>
+  <textarea id="packageDescription" placeholder="Örnek: Bu paket Minecraft için örnek RP/BP paketidir."></textarea>
+
+  <label>Yapımcı Adı:</label>
+  <input type="text" id="author" placeholder="Örnek: Klix">
+
+  <label>Destek URL:</label>
+  <input type="url" id="support" placeholder="https://destek.site.com">
+
+  <label>Paket URL:</label>
+  <input type="url" id="url" placeholder="https://paket.site.com">
+
+  <button id="generateManifest">Manifest Oluştur</button>
+  <button id="downloadManifest">manifest.json İndir</button>
+
+  <pre id="manifestPreview">Manifest burada görünecek...</pre>
+</div>
+
+<script>
+const manifestPreview = document.getElementById('manifestPreview');
+let currentManifest = null;
+
+document.getElementById('generateManifest').addEventListener('click', () => {
+  const uuid = document.getElementById('uuid').value.trim();
+  if(!uuid) { alert("UUID girin!"); return; }
+
+  const packageName = document.getElementById('packageName').value || "Örnek Paket";
+  const packageDescription = document.getElementById('packageDescription').value || "Bu paket Minecraft için örnek RP/BP paketidir.";
+  const author = document.getElementById('author').value || "Yapımcı Adı";
+  const support = document.getElementById('support').value || "https://destek.site.com";
+  const url = document.getElementById('url').value || "https://paket.site.com";
+
+  const manifest = {
+    format_version: 2,
+    header: {
+      description: packageDescription,
+      name: packageName,
+      uuid: uuid,
+      version: [1,0,0],
+      min_engine_version: [1,16,0],
+      author: author,
+      support: support,
+      url: url
+    },
+    modules: [
+      { description: packageDescription, type: "resources", uuid: uuid, version: [1,0,0] },
+      { description: packageDescription, type: "data", uuid: uuid, version: [1,0,0] }
+    ]
+  };
+
+  currentManifest = manifest;
+  manifestPreview.textContent = JSON.stringify(manifest, null, 2);
+});
+
+document.getElementById('downloadManifest').addEventListener('click', () => {
+  if(!currentManifest) { alert("Önce manifest oluşturun!"); return; }
+  const blob = new Blob([JSON.stringify(currentManifest, null, 2)], {type: "application/json"});
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "manifest.json";
+  link.click();
+});
+</script>
+
+</body>
+</html>
