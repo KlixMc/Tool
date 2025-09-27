@@ -18,7 +18,6 @@
   }
   .logo {
     width: 120px;
-    height: auto;
     margin-bottom: 1rem;
     border-radius: 12px;
     box-shadow: 0 3px 10px rgba(0,0,0,0.3);
@@ -41,7 +40,7 @@
     font-size: 1.1rem;
     border-radius: 6px;
     cursor: pointer;
-    margin: 1rem 0;
+    margin: 0.5rem 0;
     width: 80%;
   }
   button:hover { background: #e67e22; }
@@ -55,7 +54,20 @@
 <div class="card">
   <button onclick="window.location.href='uuid.html'">UUID Oluştur</button>
   <button onclick="window.location.href='manifest.html'">Manifest Oluştur</button>
+  <button onclick="logout()">Çıkış Yap</button>
 </div>
+
+<script>
+const loggedUser = localStorage.getItem("loggedInUser");
+if (!loggedUser) {
+  window.location.href = "login.html";
+}
+
+function logout() {
+  localStorage.removeItem("loggedInUser");
+  window.location.href = "login.html";
+}
+</script>
 
 </body>
 </html>
